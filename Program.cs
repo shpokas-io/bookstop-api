@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontendApp",
     builder => 
     {
-        builder.WithOrigins("http://localhost:5173")// FrontEnd port
+        builder.WithOrigins("https://bookspot-webapp.netlify.app/")// FrontEnd port
         .AllowAnyHeader()//Allow any fetch header
         .AllowAnyMethod();//Allow any methods(GET,POST,DELETE etc.)
     });
