@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 //Enable CORS for syncing with the frontend application
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontendApp",
+    options.AddPolicy("AllowSpecificOrigin",
     builder => 
     {
         builder.WithOrigins("https://bookspot-webapp.netlify.app/")// FrontEnd port
@@ -66,7 +66,7 @@ if (app.Environment.IsDevelopment())
     
 }
 
-app.UseCors("AllowFrontendApp"); //Apply CORS policy
+app.UseCors("AllowSpecificOrigin"); //Apply CORS policy
 
 app.UseAuthorization();//Enable authorization
 app.UseHttpsRedirection();//Redirect HTTP requests to more secure HTTPS
