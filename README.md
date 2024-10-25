@@ -13,8 +13,6 @@ Books Endpoint - https://bkstapp-7f24cea47b9e.herokuapp.com/api/books <br>
 Reservations Endpoint - https://bkstapp-7f24cea47b9e.herokuapp.com/api/reservations<br>
 Explore the API for seamless integration with your applications!
 
-Let me know if you need any further adjustments!
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links. -->
 
