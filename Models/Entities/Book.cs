@@ -1,4 +1,4 @@
-//Public book class
+
 namespace bookstopAPI.Models
 {
 public class Book

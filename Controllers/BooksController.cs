@@ -1,11 +1,9 @@
+using AutoMapper;
 using bookstopAPI.Data;
 using bookstopAPI.DTOs;
 using bookstopAPI.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]

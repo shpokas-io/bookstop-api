@@ -12,7 +12,7 @@ namespace bookstopAPI.Data
 
     protected override void OnModelCreating (ModelBuilder modelBuilder)
     {
-      //Books
+
       modelBuilder.Entity<Book>().HasData(
         new Book { Id = 1, Name = "Harry Potter and the Sorcerer's Stone", Year = 1997, Type = "Book", PictureUrl= " https://covers.openlibrary.org/b/id/7984916-L.jpg "},
         new Book { Id = 2, Name = "Harry Potter and the Chamber of Secrets", Year = 1998, Type = "Book", PictureUrl= " https://covers.openlibrary.org/b/id/7984919-L.jpg "},
