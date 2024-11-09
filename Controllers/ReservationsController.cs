@@ -7,104 +7,71 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/[controller]")]
 public class ReservationsController : ControllerBase
 {
-  private readonly LibraryContext _context;
+    private readonly LibraryContext _context;
 
-  public ReservationsController(LibraryContext context)
-  {
-    _context = context;
-  }
-
-  //Post api/Reservations
-  [HttpPost]
-  public async Task<ActionResult<Reservation>> CreateReservation(Reservation reservation)
-  {
-    //Validate reservation details
-if(reservation ==null || reservation.Days <= 0 || string.IsNullOrWhiteSpace(reservation.UserId))
-{
-  return BadRequest("Invalid reservation details.");
-}
-    //Find the associated book
-    var book = await _context.Books.FindAsync(reservation.BookId);
-    if(book == null)
+    public ReservationsController(LibraryContext context)
     {
-      return NotFound("Book not found.");
+        _context = context;
     }
 
-    //Calculate total cost based on days, type, quick pickup, etc.
-    decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
-    decimal totalCost = dailyRate * reservation.Days;
+    [HttpPost]
+    public async Task<ActionResult<Reservation>> CreateReservation(Reservation reservation)
+    {
+        if (reservation == null || reservation.Days <= 0 || string.IsNullOrWhiteSpace(reservation.UserId))
+            return BadRequest("Invalid reservation details.");
 
-    //Apply discounts based on the number of days reserved
-    if (reservation.Days > 3)
-    {
-      totalCost -= totalCost * 0.1m; //10% discount for > 3 days
-    }
-    if(reservation.Days > 10)
-    {
-      totalCost -= totalCost * 0.2m; //20% deiscount for > 10 days
-    }
+        var book = await _context.Books.FindAsync(reservation.BookId);
+        if (book == null)
+            return NotFound("Book not found.");
 
-    //Add fixed service fee and quick pickup fee if applicable
-    totalCost += 3m; //This is service fee default
-    if(reservation.IsQuickPickUp)
-    {
-      totalCost += 5m; //Quick pickup fee
+        decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
+        reservation.TotalCost = CalculateTotalCost(dailyRate, reservation.Days, reservation.IsQuickPickUp);
+
+        _context.Reservations.Add(reservation);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, reservation);
     }
 
-    //Set the total cost in the reservation object
-    reservation.TotalCost = totalCost;
-
-    //Add the reservation to the database
-    _context.Reservations.Add(reservation);
-    await _context.SaveChangesAsync();
-
-    //Return the created reservation
-    return CreatedAtAction("GetReservation", new { id = reservation.Id}, reservation);
- 
-  }
-
-  //GET: api/Reservations
-  [HttpGet]
-  public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
-  {
-    //Return list of reservations
-    return await _context.Reservations.ToListAsync();
-  }
-
-  //GET: api/Reservations/5
-  [HttpGet("{id}")]
-  public async Task<ActionResult<Reservation>> GetReservation(int id)
-  {
-    //Find the reservation by ID
-    var reservation = await _context.Reservations.FindAsync(id);
-
-
-    //CHeck if the reservation by ID
-    if(reservation == null)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
     {
-      return NotFound();
-
+        return Ok(await _context.Reservations.ToListAsync());
     }
 
-    //Return the found reservation
-    return reservation;
-  }
-
-//DELETE: api/reservations/{id}
-  [HttpDelete("{id}")]
-  public async Task<ActionResult> DeleteReservation(int id)
-  {
-    //Find the reservation by ID
-    var reservation = await _context.Reservations.FindAsync(id);
-
-    if(reservation == null)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Reservation>> GetReservation(int id)
     {
-      return NotFound();
+        var reservation = await _context.Reservations.FindAsync(id);
+        return reservation == null ? NotFound() : Ok(reservation);
     }
-    //Remove the reservation from the database
-    _context.Reservations.Remove(reservation);
-    await _context.SaveChangesAsync();
 
-    return NoContent();
-  }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteReservation(int id)
+    {
+        var reservation = await _context.Reservations.FindAsync(id);
+        if (reservation == null)
+            return NotFound();
+
+        _context.Reservations.Remove(reservation);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    private decimal CalculateTotalCost(decimal dailyRate, int days, bool isQuickPickUp)
+    {
+        decimal totalCost = dailyRate * days;
+
+        if (days > 10)
+            totalCost *= 0.8m;
+        else if (days > 3)
+            totalCost *= 0.9m;
+
+        totalCost += 3m;
+        if (isQuickPickUp)
+            totalCost += 5m;
+
+        return totalCost;
+    }
 }
