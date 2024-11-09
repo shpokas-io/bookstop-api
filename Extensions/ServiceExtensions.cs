@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
       var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN") ?? "http://localhost:3000";
-      services.AddCors(oprions =>
+      services.AddCors(options =>
       {
         options.AddPolicy("AllowSpecificOrigin", UriBuilder =>
         {
