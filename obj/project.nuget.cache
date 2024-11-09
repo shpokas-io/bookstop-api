@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "NIFVgs1PXl0=",
+  "dgSpecHash": "Y2CzIvptPeA=",
   "success": true,
   "projectFilePath": "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj",
   "expectedPackageFiles": [
+    "/home/shpokas/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/shpokas/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/home/shpokas/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
-    "/home/shpokas/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
+    "/home/shpokas/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/shpokas/.nuget/packages/microsoft.data.sqlclient/2.1.4/microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "/home/shpokas/.nuget/packages/microsoft.data.sqlclient.sni.runtime/2.1.1/microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "/home/shpokas/.nuget/packages/microsoft.entityframeworkcore/8.0.10/microsoft.entityframeworkcore.8.0.10.nupkg.sha512",
