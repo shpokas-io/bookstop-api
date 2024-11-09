@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("bookstopAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3be9c38aa7595ed95bd56375c8b5dcd97385a45")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f03590747f280efa99431e74ca065e5ef884761")]
 [assembly: System.Reflection.AssemblyProductAttribute("bookstopAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("bookstopAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
