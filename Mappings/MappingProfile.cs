@@ -7,5 +7,6 @@ public class MappingProfile : Profile{
   public MappingProfile()
   {
     CreateMap<Book,BookDTO>().ReverseMap();
+    CreateMap<Reservation, ReservationDTO>().ReverseMap();
   }
 }

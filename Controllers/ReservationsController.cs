@@ -1,49 +1,64 @@
+using AutoMapper;
 using bookstopAPI.Data;
+using bookstopAPI.DTOs;
 using bookstopAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ReservationsController : ControllerBase
 {
     private readonly LibraryContext _context;
+    private readonly IMapper _mapper;
 
-    public ReservationsController(LibraryContext context)
+    public ReservationsController(LibraryContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Reservation>> CreateReservation(Reservation reservation)
+    public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDto)
     {
-        if (reservation == null || reservation.Days <= 0 || string.IsNullOrWhiteSpace(reservation.UserId))
+        if (reservationDto == null || reservationDto.Days <= 0 || string.IsNullOrWhiteSpace(reservationDto.UserId))
             return BadRequest("Invalid reservation details.");
 
-        var book = await _context.Books.FindAsync(reservation.BookId);
+        var book = await _context.Books.FindAsync(reservationDto.BookId);
         if (book == null)
             return NotFound("Book not found.");
 
+        // Map DTO to Reservation entity
+        var reservation = _mapper.Map<Reservation>(reservationDto);
         decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
         reservation.TotalCost = CalculateTotalCost(dailyRate, reservation.Days, reservation.IsQuickPickUp);
 
         _context.Reservations.Add(reservation);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, reservation);
+        var createdReservationDto = _mapper.Map<ReservationDTO>(reservation);
+        return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, createdReservationDto);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
+    public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetReservations()
     {
-        return Ok(await _context.Reservations.ToListAsync());
+        var reservations = await _context.Reservations.ToListAsync();
+        var reservationDtos = _mapper.Map<IEnumerable<ReservationDTO>>(reservations);
+        return Ok(reservationDtos);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Reservation>> GetReservation(int id)
+    public async Task<ActionResult<ReservationDTO>> GetReservation(int id)
     {
         var reservation = await _context.Reservations.FindAsync(id);
-        return reservation == null ? NotFound() : Ok(reservation);
+        if (reservation == null)
+            return NotFound();
+
+        var reservationDto = _mapper.Map<ReservationDTO>(reservation);
+        return Ok(reservationDto);
     }
 
     [HttpDelete("{id}")]
