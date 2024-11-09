@@ -12,6 +12,7 @@ var app = builder.Build();
 
 app.ConfigureMiddleware();
 
-SeedData.SeedDatabase(app);
+await SeedData.SeedDatabaseAsync(app);
+
 
 app.Run();
