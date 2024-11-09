@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN") ?? "http://localhost:3000";
+            var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN") ?? "http://localhost:5173";
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin", builder =>

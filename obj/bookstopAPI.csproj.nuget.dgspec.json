@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj": {}
+    "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/bookstopAPI.csproj": {}
   },
   "projects": {
-    "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj": {
+    "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/bookstopAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj",
+        "projectUniqueName": "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/bookstopAPI.csproj",
         "projectName": "bookstopAPI",
-        "projectPath": "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj",
+        "projectPath": "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/bookstopAPI.csproj",
         "packagesPath": "/home/shpokas/.nuget/packages/",
-        "outputPath": "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/obj/",
+        "outputPath": "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/shpokas/.nuget/NuGet/NuGet.Config"

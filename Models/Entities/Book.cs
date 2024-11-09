@@ -3,10 +3,10 @@ namespace bookstopAPI.Models
 {
 public class Book
 {
-  public int Id {get;set;}
-  public string Name {get;set;}
-  public int Year {get;set;}
-  public string Type {get;set;}
-  public string PictureUrl {get;set;}
+  public   int Id {get;set;}
+  public required string Name {get;set;}
+  public  required int Year {get;set;}
+  public required string Type {get;set;}
+  public required string PictureUrl {get;set;}
 }
 }

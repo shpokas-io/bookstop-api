@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A0DOirxO9JY=",
+  "dgSpecHash": "nAFxxQ++Nqc=",
   "success": true,
-  "projectFilePath": "/home/shpokas/programming/fullstack-projects/BookStop-App/bookstopAPI/bookstopAPI.csproj",
+  "projectFilePath": "/home/shpokas/programming/fullstack-projects/BookStop-App/backend/bookstopAPI.csproj",
   "expectedPackageFiles": [
     "/home/shpokas/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/shpokas/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
