@@ -23,23 +23,31 @@ public class ReservationsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDto)
     {
-        if (reservationDto == null || reservationDto.Days <= 0 || string.IsNullOrWhiteSpace(reservationDto.UserId))
-            return BadRequest("Invalid reservation details.");
+        try 
+        {
+            if(reservationDto == null || reservationDto.Days <= 0 || string.IsNullOrWhiteSpace(reservationDto.UserId))
+            return BadRequest(new { message = "Invalid reservation details."});
 
-        var book = await _context.Books.FindAsync(reservationDto.BookId);
-        if (book == null)
-            return NotFound("Book not found.");
+            var book = await _context.Books.FindAsync(reservationDto.BookId);
+            if(book == null)
+            return NotFound(new{message = "Book not found."});
 
-        // Map DTO to Reservation entity
-        var reservation = _mapper.Map<Reservation>(reservationDto);
-        decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
-        reservation.TotalCost = CalculateTotalCost(dailyRate, reservation.Days, reservation.IsQuickPickUp);
+            var reservation = _mapper.Map<Reservation>(reservationDto);
+            decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
+            reservation.TotalCost = CalculateTotalCost(dailyRate, reservation.Days, reservation.IsQuickPickUp);
 
-        _context.Reservations.Add(reservation);
-        await _context.SaveChangesAsync();
+            _context.Reservations.Add(reservation);
+            await _context.SaveChangesAsync();
 
-        var createdReservationDto = _mapper.Map<ReservationDTO>(reservation);
-        return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, createdReservationDto);
+            var createdReservationDto = _mapper.Map<ReservationDTO>(reservation);
+            return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id}, createdReservationDto);
+
+        }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine($"Error creating reservation: {ex.Message}");
+            return StatusCode(500, new {message = "An error occurred while processing your request."});
+        }
     }
 
     [HttpGet]
