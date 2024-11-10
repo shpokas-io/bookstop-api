@@ -33,6 +33,8 @@ public class ReservationsController : ControllerBase
             return NotFound(new{message = "Book not found."});
 
             var reservation = _mapper.Map<Reservation>(reservationDto);
+            reservation.BookName = book.Name;
+            reservation.BookPictureUrl = book.PictureUrl;
             decimal dailyRate = reservation.IsAudiobook ? 3m : 2m;
             reservation.TotalCost = CalculateTotalCost(dailyRate, reservation.Days, reservation.IsQuickPickUp);
 
@@ -45,7 +47,7 @@ public class ReservationsController : ControllerBase
         }
         catch(Exception ex)
         {
-            Console.Error.WriteLine($"Error creating reservation: {ex.Message}");
+            Console.WriteLine($"Error creating reservation: {ex.Message}");
             return StatusCode(500, new {message = "An error occurred while processing your request."});
         }
     }
