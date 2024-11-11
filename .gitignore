@@ -11,6 +11,7 @@
 # Ignore build output
 bin/
 obj/
+out/
 
 # Ignore dependencies
 *.nupkg
