@@ -6,9 +6,27 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+string frontendUrl = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN");
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        if(!string.IsNullOrEmpty(frontendUrl))
+        {
+            policy.WithOrigins(frontendUrl)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+        }
+    });
+});
+
 builder.Services.ConfigureServices();
 
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 app.ConfigureMiddleware();
 
